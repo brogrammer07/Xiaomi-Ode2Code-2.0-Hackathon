@@ -26,7 +26,11 @@ const CardFields = ({ title, details, status }) => {
               <h3 className="font-bold">
                 {Types.find((type, i) => type[0] === data[0])[1]}:
               </h3>
-              <p className="">{data[1]}</p>
+              {data[0] === "ADDRESS" ? (
+                <p>{data[1]?.fullAddress}</p>
+              ) : (
+                <p className="">{data[1]}</p>
+              )}
             </div>
           ))}
         </div>

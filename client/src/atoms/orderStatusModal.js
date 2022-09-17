@@ -12,3 +12,11 @@ export const basicDetailsStatusState = atom({
   key: "basicDetailsStatusState",
   default: false,
 });
+export const summaryDetailsStatusState = atom({
+  key: "summaryDetailsStatusState",
+  default: false,
+});
+export const paymentDetailsStatusState = atom({
+  key: "paymentDetailsStatusState",
+  default: false,
+});

@@ -47,7 +47,16 @@ const Store = () => {
       return;
     }
   };
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
 
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
   return (
     <OrderLayout>
       <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
@@ -73,9 +82,9 @@ const Store = () => {
                 <Select
                   id="storeType"
                   showSearch
-                  placeholder="Select a person"
+                  placeholder="Select a store type"
                   optionFilterProp="children"
-                  value={storeDetails.STORE_TYPE}
+                  value={storeDetails.STORE_TYPE || null}
                   onChange={(value) => handleChange(value, "storeType")}
                   filterOption={(input, option) =>
                     option.children.toLowerCase().includes(input.toLowerCase())
@@ -93,9 +102,9 @@ const Store = () => {
                   id="storeName"
                   disabled={storeDetails.STORE_TYPE === ""}
                   showSearch
-                  placeholder="Select a person"
+                  placeholder="Select a store name"
                   optionFilterProp="children"
-                  value={storeDetails.STORE_NAME}
+                  value={storeDetails.STORE_NAME || null}
                   onChange={(value) => handleChange(value, "storeName")}
                   filterOption={(input, option) =>
                     option.children.toLowerCase().includes(input.toLowerCase())

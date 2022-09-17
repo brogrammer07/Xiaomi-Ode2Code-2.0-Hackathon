@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import operatorRoutes from "./routes/operator.js";
+import customerRoutes from "./routes/customer.js";
+import couponRoutes from "./routes/coupon.js";
 const app = express();
 dotenv.config();
 // middlewares
@@ -18,6 +20,8 @@ app.use(
 
 // set routes
 app.use("/api", operatorRoutes);
+app.use("/api", customerRoutes);
+app.use("/api", couponRoutes);
 // Set Port
 const PORT = process.env.PORT || 5000;
 app.get("/", (req, res) => {

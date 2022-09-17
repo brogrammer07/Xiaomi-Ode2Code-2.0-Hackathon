@@ -6,6 +6,7 @@ import { productDetailsState } from "../atoms/orderModal";
 import {
   basicDetailsStatusState,
   productDetailsStatusState,
+  storeDetailsStatusState,
 } from "../atoms/orderStatusModal";
 import { progressState } from "../atoms/progressModal";
 import { productSchema } from "../Utils/OrderSchema";
@@ -21,6 +22,7 @@ const Product = () => {
   const [productDetails, setProductDetails] =
     useRecoilState(productDetailsState);
   const basicDetailsStatus = useRecoilValue(basicDetailsStatusState);
+  const storeDetailsStatus = useRecoilValue(storeDetailsStatusState);
   const [productDetailsStatus, setProductDetailsStatus] = useRecoilState(
     productDetailsStatusState
   );
@@ -31,9 +33,7 @@ const Product = () => {
   const [showVideo, setShowVideo] = useState(false);
   const [serialNumber, setSerialNumber] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
-  useEffect(() => {
-    setProgress(16.66 * 2);
-  }, []);
+
   const handleChange = (value, type) => {
     if (type === "category") {
       setProductDetails({
@@ -43,8 +43,10 @@ const Product = () => {
         COLOUR: "",
         SIZE: "",
         QUANTITY: 0,
+        DELIVERY_MODE: "",
       });
       let temp = productSchema.categories.find((data) => data.title === value);
+      setSerialNumber(serialNumber + temp.id);
       setProducts(temp.products);
       setColours(
         temp.specifications.find((data) => data.title === "Colour").colours
@@ -58,13 +60,31 @@ const Product = () => {
         SIZE: "",
         QUANTITY: 0,
       });
+      let temp = productSchema.categories
+        .find((data) => data.id === serialNumber)
+        .products.find((pro) => pro.title === value);
+      setSerialNumber(serialNumber + temp.SN);
       setProductDetailsStatus(false);
     } else if (type === "colour") {
       setProductDetails({ ...productDetails, COLOUR: value });
+      let temp = productSchema.categories
+        .find((data) => data.id === serialNumber.slice(0, 2))
+        .specifications[0].colours.find((col) => col.title === value);
+      setSerialNumber(serialNumber + temp.id);
     } else if (type === "size") {
-      setProductDetails({ ...productDetails, SIZE: value });
+      let temp = productSchema.categories
+        .find((data) => data.id === serialNumber.slice(0, 2))
+        .specifications[1].sizes.find((siz) => siz.title === value);
+      setSerialNumber(serialNumber + temp.id);
+      setProductDetails({
+        ...productDetails,
+        SIZE: value,
+        PRODUCT_SN: serialNumber + temp.id,
+      });
     } else if (type === "quantity") {
       setProductDetails({ ...productDetails, QUANTITY: value });
+    } else if (type === "deliveryMode") {
+      setProductDetails({ ...productDetails, DELIVERY_MODE: value });
       setProductDetailsStatus(value !== 0 ? true : false);
     } else return;
   };
@@ -72,7 +92,7 @@ const Product = () => {
   const handleOk = () => {
     setConfirmLoading(true);
     const category = serialNumber.slice(0, 2);
-    const SN = serialNumber.slice(0, 6);
+    const SN = serialNumber.slice(2, 6);
     const colourId = serialNumber.slice(6, 8);
     const sizeId = serialNumber.slice(8, 10);
     let temp = productSchema.categories.find((data) => data.id === category);
@@ -94,6 +114,23 @@ const Product = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    if (!storeDetailsStatus) {
+      navigate("/store");
+    }
+    setProgress(16.66 * 2);
+  }, []);
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
   return (
     <OrderLayout>
       <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
@@ -127,7 +164,7 @@ const Product = () => {
                     showSearch
                     placeholder="Select a Category"
                     optionFilterProp="children"
-                    value={productDetails.CATEGORY}
+                    value={productDetails.CATEGORY || null}
                     onChange={(value) => handleChange(value, "category")}
                     filterOption={(input, option) =>
                       option.children
@@ -151,7 +188,7 @@ const Product = () => {
                     showSearch
                     placeholder="Select a Product"
                     optionFilterProp="children"
-                    value={productDetails.PRODUCT}
+                    value={productDetails.PRODUCT || null}
                     onChange={(value) => handleChange(value, "product")}
                     filterOption={(input, option) =>
                       option.children
@@ -176,7 +213,7 @@ const Product = () => {
                     showSearch
                     placeholder="Select a Colour"
                     optionFilterProp="children"
-                    value={productDetails.COLOUR}
+                    value={productDetails.COLOUR || null}
                     onChange={(value) => handleChange(value, "colour")}
                     filterOption={(input, option) =>
                       option.children
@@ -196,11 +233,14 @@ const Product = () => {
                   <label htmlFor="size">Size</label>
                   <Select
                     id="size"
-                    disabled={productDetails.PRODUCT === ""}
+                    disabled={
+                      (productDetails.PRODUCT === "",
+                      productDetails.COLOUR === "")
+                    }
                     showSearch
                     placeholder="Select a Size"
                     optionFilterProp="children"
-                    value={productDetails.SIZE}
+                    value={productDetails.SIZE || null}
                     onChange={(value) => handleChange(value, "size")}
                     filterOption={(input, option) =>
                       option.children
@@ -241,6 +281,27 @@ const Product = () => {
                   </Select>
                 </div>
               </div>
+              <div className="flex flex-col space-y-5">
+                <div className="flex flex-col space-y-2">
+                  <label htmlFor="deliveryMode">Delivery Mode</label>
+                  <Select
+                    id="deliveryMode"
+                    disabled={productDetails.QUANTITY === 0}
+                    showSearch
+                    placeholder="Select Delivery Mode"
+                    optionFilterProp="children"
+                    value={productDetails.DELIVERY_MODE || null}
+                    onChange={(value) => handleChange(value, "deliveryMode")}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }>
+                    <Option value={"Pickup"}>Pickup</Option>
+                    <Option value={"Home Delivery"}>Home Delivery</Option>
+                  </Select>
+                </div>
+              </div>
             </div>
             <div className="text-center mt-10 space-y-6">
               <h1>OR</h1>
@@ -278,7 +339,10 @@ const Product = () => {
             </Modal>
           </div>
           <Button
-            disabled={productDetails.QUANTITY === 0}
+            disabled={
+              productDetails.QUANTITY === 0 ||
+              productDetails.DELIVERY_MODE === ""
+            }
             onClick={() => navigate("/basic-details")}
             type="primary"
             size="large">
