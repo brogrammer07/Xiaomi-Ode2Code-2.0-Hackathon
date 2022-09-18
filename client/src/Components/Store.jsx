@@ -59,8 +59,8 @@ const Store = () => {
   }, []);
   return (
     <OrderLayout>
-      <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
-        <div className="w-[95%] mx-auto flex flex-col justify-between h-full">
+      <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4 ">
+        <div className="w-[95%] mx-auto flex flex-col justify-between h-full overflow-y-auto pt-5 md:pt-0">
           <div className="">
             <div className="flex justify-between">
               <button disabled={true}></button>

@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { Button, Input, message, Modal, Select } from "antd";
+import { Alert, Button, Input, message, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -61,12 +61,11 @@ const Basic = () => {
             NAME: res.data.name,
             EMAIL: res.data.email,
             COC: res.data.coc,
+            ADDRESS: res.data.addresses[0],
           });
           setAddresses(res.data.addresses);
           setDataPopulateLoading(false);
-          if (productDetails.DELIVERY_MODE === "Pickup") {
-            setBasicDetailsStatus(true);
-          }
+          setBasicDetailsStatus(true);
         } catch (error) {
           setCustomerFound("Not Found");
           message.info("Customer not found");
@@ -109,6 +108,7 @@ const Basic = () => {
   const handleOk = () => {
     setConfirmLoading(true);
     setAddresses([...addresses, newAddress]);
+    setBasicDetails({ ...basicDetails, ADDRESS: newAddress });
     setDataChanged(true);
     setTimeout(() => {
       setShowAddressModal(false);
@@ -176,8 +176,8 @@ const Basic = () => {
 
   return (
     <OrderLayout>
-      <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
-        <div className="w-[95%] mx-auto flex flex-col justify-between h-full">
+      <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4 ">
+        <div className="w-[95%] mx-auto flex flex-col justify-between h-full overflow-y-auto pt-5 md:pt-0">
           <div className="">
             <div className="flex justify-between">
               <button
@@ -220,8 +220,14 @@ const Basic = () => {
               </div>
             </div>
             {customerFound !== "" && (
-              <div className="mt-8 flex flex-col justify-center items-center space-x-4">
-                <h1 className="text-[18px]">Customer {customerFound}</h1>
+              <div className="mt-5 flex flex-col justify-center items-center space-x-4">
+                <Alert
+                  message={`Customer ${customerFound}`}
+                  style={{ marginBottom: "20px" }}
+                  type={`${customerFound === "Found" ? "success" : "error"}`}
+                  showIcon
+                />
+
                 {customerFound === "Found" ? (
                   <>
                     {dataPopulateLoading && (
@@ -236,7 +242,10 @@ const Basic = () => {
                     )}
                   </>
                 ) : (
-                  <h2 className="text-[16px]">Register</h2>
+                  <>
+                    <div className="h-[0.2px] w-full  border-t-[0.5px] border-gray-300 border-dashed pt-[5px]"></div>
+                    <h2 className="text-[18px] underline ">Register</h2>
+                  </>
                 )}
               </div>
             )}
@@ -281,14 +290,21 @@ const Basic = () => {
                     option.children.toLowerCase().includes(input.toLowerCase())
                   }>
                   <Option value={"Email"}>Emaill</Option>
-
-                  <Option value={"WhatsApp"}>WhatsApp</Option>
                 </Select>
               </div>
               {productDetails.DELIVERY_MODE !== "Pickup" &&
                 productDetails.DELIVERY_MODE !== "" && (
                   <div className="flex flex-col space-y-2">
-                    <label htmlFor="coc">Address</label>
+                    <div className="flex items-center gap-3 md:gap-0">
+                      <label htmlFor="coc">Address</label>
+                      <div className="cursor-pointer hover:text-blue-600 duration-200 transition-all md:hidden flex">
+                        <BsPlusCircle
+                          onClick={() => setShowAddressModal(true)}
+                          size={20}
+                        />
+                      </div>
+                    </div>
+
                     <div className="flex items-center space-x-2">
                       <Select
                         id="address"
@@ -314,7 +330,7 @@ const Basic = () => {
                           </Option>
                         ))}
                       </Select>
-                      <div className="cursor-pointer hover:text-blue-600 duration-200 transition-all">
+                      <div className="cursor-pointer hover:text-blue-600 duration-200 transition-all hidden md:flex">
                         <BsPlusCircle
                           onClick={() => setShowAddressModal(true)}
                           size={20}

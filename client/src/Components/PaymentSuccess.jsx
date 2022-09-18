@@ -1,7 +1,7 @@
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import API from "../API";
 import {
   basicDetailsState,
@@ -44,7 +44,7 @@ const PaymentSuccess = () => {
   }, []);
 
   useEffect(() => {
-    if (referenceNumber) {
+    if (referenceNumber && !paymentStatus) {
       const createOrder = async () => {
         const { data } = await API.post("/order/create", {
           productSN: productDetails.PRODUCT_SN,
@@ -97,8 +97,8 @@ const PaymentSuccess = () => {
 
   return (
     <OrderLayout>
-      <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
-        <div className="w-[95%] mx-auto flex flex-col justify-between h-full">
+      <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4">
+        <div className="w-[95%] mx-auto flex flex-col justify-between h-full overflow-y-auto pt-5 md:pt-0">
           <div className="">
             <div className="flex flex-col items-center">
               <img
@@ -112,21 +112,24 @@ const PaymentSuccess = () => {
                   : "Creating Order..."}
               </h1>
               {paymentStatus && (
-                <div className="space-x-4">
+                <div className="gap-4 flex sm:flex-row flex-col sm:justify-center items-center">
                   <Button
                     onClick={() => navigate(`/track-order/order/${orderId}`)}
+                    style={{ width: "10rem" }}
                     className="mt-3"
                     type="primary">
                     Check Order Details
                   </Button>
                   <Button
                     onClick={() => navigate("/invoice")}
+                    style={{ width: "10rem" }}
                     className="mt-3"
                     type="primary">
                     Print Invoice
                   </Button>
                   <Button
                     onClick={() => handleNewOrder()}
+                    style={{ width: "10rem" }}
                     className="mt-3"
                     type="primary">
                     Place New Order
@@ -134,9 +137,11 @@ const PaymentSuccess = () => {
                 </div>
               )}
               {pointsEarned !== 0 && (
-                <Button aria-disabled={true} className="mt-6 font-bold">
+                <Tag
+                  color="gold"
+                  style={{ padding: "10px 20px", marginTop: "2rem" }}>
                   You Earned {pointsEarned} points
-                </Button>
+                </Tag>
               )}
             </div>
           </div>

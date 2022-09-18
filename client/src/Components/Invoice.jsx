@@ -22,7 +22,7 @@ const Invoice = () => {
 
   return (
     <OrderLayout>
-      <div className="flex flex-col items-center w-full overflow-y-scroll h-[35rem]">
+      <div className="flex flex-col items-center w-full overflow-y-scroll h-[37rem] pb-[5rem]">
         <div className="flex items-center w-full justify-center mt-[2rem] mb-[2rem]">
           <ReactToPrint
             trigger={() => (
@@ -33,7 +33,7 @@ const Invoice = () => {
             content={() => ref?.current}
           />
         </div>
-        <div ref={ref} class="invoice-box">
+        <div ref={ref} class="invoice-box pb-[10rem]">
           <table cellpadding="0" cellspacing="0">
             <tr class="top">
               <td colspan="7">

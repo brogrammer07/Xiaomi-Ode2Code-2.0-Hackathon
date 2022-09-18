@@ -7,10 +7,10 @@ import Header from "./Header";
 const OrderLayout = ({ children }) => {
   const progress = useRecoilValue(progressState);
   return (
-    <div className="overflow-y-hidden">
+    <div className="sm:overflow-y-hidden flex flex-col h-screen relative ">
       <Header />
       <ProgressBar size={progress} />
-      <div className="flex overflow-y-hidden">{children}</div>
+      <div className="flex sm:overflow-y-hidden h-full ">{children}</div>
     </div>
   );
 };

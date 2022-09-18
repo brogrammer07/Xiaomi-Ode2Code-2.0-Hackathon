@@ -2,6 +2,7 @@ import { Button, message } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import API from "../API";
 import {
   basicDetailsState,
@@ -57,7 +58,7 @@ const Payment = () => {
         address: basicDetails.ADDRESS.fullAddress,
       },
       theme: {
-        color: "#3399cc",
+        color: "#4595CF",
       },
     };
     const razor = new window.Razorpay(options);
@@ -96,8 +97,8 @@ const Payment = () => {
 
   return (
     <OrderLayout>
-      <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
-        <div className="w-[95%] mx-auto flex flex-col justify-between h-full">
+      <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4  ">
+        <div className="w-[95%] mx-auto flex flex-col justify-between h-full overflow-y-auto pt-5 md:pt-0">
           <div className="">
             <div className="flex justify-between">
               <button
@@ -107,24 +108,41 @@ const Payment = () => {
                 Back
               </button>
               <h1 className="text-center text-[24px] font-bold ">Payment</h1>
-              <button></button>
+              <div className="opacity-0">Next</div>
             </div>
-            <div className="flex flex-col mt-[8rem] space-y-10">
+            <div className="flex items-center justify-center mt-[4rem]">
+              <HiOutlineCurrencyRupee color="#30aa3c" size={60} />
+            </div>
+            <div className="flex flex-col mt-[2rem] space-y-10 items-center">
               <h1 className="text-center text-[20px]">
                 Pay ₹ {orderSummary.TOTAL} using
               </h1>
-              <Button
-                onClick={() => checkoutOnline()}
-                type="primary"
-                size="large">
-                Online (Debit/Credit Card, UPI etc)
-              </Button>
-              <Button
-                onClick={() => checkoutCash()}
-                type="primary"
-                size="large">
-                Cash
-              </Button>
+              <div className="lg:w-[50%] w-full flex justify-center">
+                <Button
+                  onClick={() => checkoutOnline()}
+                  style={{
+                    width: "90%",
+                    height: "3rem",
+                    borderRadius: "10px",
+                  }}
+                  type="primary"
+                  size="large">
+                  Online (Debit/Credit Card, UPI etc)
+                </Button>
+              </div>
+              <div className="lg:w-[50%] w-full flex justify-center">
+                <Button
+                  onClick={() => checkoutCash()}
+                  style={{
+                    width: "90%",
+                    height: "3rem",
+                    borderRadius: "10px",
+                  }}
+                  type="primary"
+                  size="large">
+                  Cash
+                </Button>
+              </div>
             </div>
           </div>
         </div>

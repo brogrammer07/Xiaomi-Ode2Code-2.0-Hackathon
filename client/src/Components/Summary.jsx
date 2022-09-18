@@ -1,4 +1,4 @@
-import { Button, Input, message } from "antd";
+import { Button, Input, message, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -152,9 +152,9 @@ const Summary = () => {
   console.log("Points", orderSummary.COUPON_CODE);
   return (
     <OrderLayout>
-      <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
-        <div className="w-[95%] mx-auto flex flex-col justify-between h-full">
-          <div className="">
+      <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4 ">
+        <div className="w-[95%] mx-auto flex flex-col justify-between h-full overflow-y-hidden pt-5 md:pt-0">
+          <div className="h-[80%]">
             <div className="flex justify-between">
               <button
                 onClick={() => navigate("/basic-details")}
@@ -174,56 +174,141 @@ const Summary = () => {
                 Next
               </button>
             </div>
-            <div className="overflow-y-scroll h-[27rem] scrollbar-hide ">
-              <div className="flex space-x-10 mb-4">
+            <div className="overflow-y-scroll h-full scrollbar-hide ">
+              <div className="flex xl:flex-row flex-col space-x-10 mb-4">
                 <img
-                  className="object-contain w-[15rem] h-[18rem] "
+                  className="object-contain w-[15rem] h-[18rem] self-center "
                   src={imageUrl}
                   alt=""
                 />
 
                 <div className="flex flex-col mt-8">
                   <h1 className="text-[24px]">{productDetails.PRODUCT}</h1>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="flex space-x-2">
-                      <h3>Category:</h3>
-                      <span>{productDetails.CATEGORY}</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <h3>Colour:</h3>
-                      <span>{productDetails.COLOUR}</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <h3>Size:</h3>
-                      <span>{productDetails.SIZE}</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <h3>Quantity:</h3>
-                      <span>{productDetails.QUANTITY}</span>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 mt-3">
-                    <div className="flex space-x-2">
-                      <h3>Name:</h3>
-                      <span>{basicDetails.NAME}</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <h3>Phone Number:</h3>
-                      <span>{basicDetails.PHONE}</span>
-                    </div>
-                    {basicDetails.EMAIL !== "" && (
-                      <div className="flex space-x-2">
-                        <h3>Email:</h3>
-                        <span>{basicDetails.EMAIL}</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                    <div className="flex flex-col  space-y-3">
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          Category
+                        </Tag>
+                        <span>{productDetails.CATEGORY}</span>
                       </div>
-                    )}
-                    <div className="flex space-x-2">
-                      <h3>Choice of communication:</h3>
-                      <span>{basicDetails.COC}</span>
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          Size
+                        </Tag>
+                        <span>{productDetails.SIZE}</span>
+                      </div>
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          Quantity
+                        </Tag>
+                        <span>{productDetails.QUANTITY}</span>
+                      </div>
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          Name
+                        </Tag>
+                        <span>{basicDetails.NAME}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col space-y-3">
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          Colour
+                        </Tag>
+                        <span>{productDetails.COLOUR}</span>
+                      </div>
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          Phone No
+                        </Tag>
+                        <span>{basicDetails.PHONE}</span>
+                      </div>
+                      {basicDetails.EMAIL !== "" && (
+                        <div className="">
+                          <Tag
+                            style={{
+                              fontSize: "15px",
+                              padding: "3px 8px",
+                              fontWeight: "500",
+                              width: "5rem",
+                            }}
+                            color="blue">
+                            Email
+                          </Tag>
+                          <span>{basicDetails.EMAIL}</span>
+                        </div>
+                      )}
+                      <div className="">
+                        <Tag
+                          style={{
+                            fontSize: "15px",
+                            padding: "3px 8px",
+                            fontWeight: "500",
+                            width: "5rem",
+                          }}
+                          color="blue">
+                          COC
+                        </Tag>
+                        <span>{basicDetails.COC}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex space-x-2 mt-3">
-                    <h3>Address:</h3>
+                  <div className="mt-[12px]">
+                    <Tag
+                      style={{
+                        fontSize: "15px",
+                        padding: "3px 8px",
+                        fontWeight: "500",
+                        width: "5rem",
+                      }}
+                      color="blue">
+                      {productDetails.DELIVERY_MODE !== "Pickup"
+                        ? "Address"
+                        : "Delivery"}
+                    </Tag>
                     {productDetails.DELIVERY_MODE !== "Pickup" ? (
                       <span>{basicDetails.ADDRESS?.fullAddress}</span>
                     ) : (
@@ -232,35 +317,38 @@ const Summary = () => {
                   </div>
                 </div>
               </div>
-              <div className="">
+              <div className="border-2 py-2 px-3 rounded-md">
+                <h1 className="text-center font-semibold text-[18px]">
+                  Order Details
+                </h1>
                 <div className="flex justify-between">
-                  <h3>Product:</h3>
+                  <h3 className="text-[15px]">Product:</h3>
                   <span>₹ {price}</span>
                 </div>
                 <div className="flex justify-between">
-                  <h3>Quantity:</h3>
+                  <h3 className="text-[15px]">Quantity:</h3>
                   <span>{productDetails.QUANTITY}</span>
                 </div>
                 <div className="flex justify-between">
-                  <h3>CGST (9%):</h3>
+                  <h3 className="text-[15px]">CGST (9%):</h3>
                   <span>₹ {Math.round((price * 9) / 100)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <h3>SGST (9%):</h3>
+                  <h3 className="text-[15px]">SGST (9%):</h3>
                   <span>₹ {Math.round((price * 9) / 100)}</span>
                 </div>
                 <div className="flex justify-between">
                   <div className="flex space-x-2">
                     <label htmlFor="coupon">
-                      <h3>Coupon:</h3>
+                      <h3 className="text-[15px]">Coupon:</h3>
                     </label>
                     {orderSummary.COUPON_CODE === "" ? (
                       <Input.Group compact>
                         <Input
-                          style={{ width: "calc(100% - 100px)" }}
+                          style={{ width: "calc(100% - 126px)" }}
                           size="small"
                           id="coupon"
-                          placeholder="Enter Valid Coupon"
+                          placeholder="Enter Coupon"
                           value={tempCouponCode}
                           onChange={(e) =>
                             handleChange(e.target.value, "coupon")
@@ -285,19 +373,16 @@ const Summary = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <div className="flex space-x-2">
-                    <h3>Points:</h3>
+                  <div className="flex space-x-5">
+                    <h3 className="text-[15px]">Points:</h3>
                     {!searchPoints ? (
-                      <Button
-                        onClick={() => getPoints()}
-                        type="primary"
-                        size="small">
+                      <Button onClick={() => getPoints()} type="" size="small">
                         Search Points
                       </Button>
                     ) : (
                       <Input.Group compact>
                         <Input
-                          style={{ width: "calc(100% - 100px)" }}
+                          style={{ width: "calc(100% - 126px)" }}
                           size="small"
                           id="points"
                           placeholder="Enter Points"
@@ -322,11 +407,11 @@ const Summary = () => {
                       : "0"}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <h3>Total:</h3>
+                <div className="flex justify-between border-t-[1px] border-gray-400 mt-2 pt-2">
+                  <h3 className="text-[15px]">Total:</h3>
                   <span className="font-semibold">₹ {orderSummary.TOTAL}</span>
                 </div>
-              </div>{" "}
+              </div>
             </div>
           </div>
           <Button

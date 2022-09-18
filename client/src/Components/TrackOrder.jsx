@@ -130,11 +130,11 @@ const TrackOrder = () => {
 
   return (
     <OrderLayout>
-      <div className="flex flex-col w-[95%] mx-auto mt-[2rem]">
+      <div className="flex flex-col w-[95%] mx-auto mt-[2rem] ">
         <h1 className="justify-self-center text-center font-bold text-[24px]">
           Track Order
         </h1>
-        <div className="w-[90%] mx-auto border-[1px] border-gray-300 h-[30rem] rounded-md py-7 px-8">
+        <div className="w-[90%] mx-auto border-[1px] border-gray-300 h-[30rem] rounded-md py-7 px-8 overflow-y-auto">
           <h2 className="font-bold text-[20px]">Order History</h2>
           <div className="flex items-center">
             <span
@@ -172,16 +172,19 @@ const TrackOrder = () => {
             )}
           </div>
 
-          <Table
-            pagination={{ pageSize: 4 }}
-            onRow={(record, rowIndex) => {
-              return {
-                onClick: () => navigate(`/track-order/order/${record.orderId}`),
-              };
-            }}
-            columns={columns}
-            dataSource={orders}
-          />
+          <div className="overflow-x-auto">
+            <Table
+              pagination={{ pageSize: 4 }}
+              onRow={(record, rowIndex) => {
+                return {
+                  onClick: () =>
+                    navigate(`/track-order/order/${record.orderId}`),
+                };
+              }}
+              columns={columns}
+              dataSource={orders}
+            />
+          </div>
         </div>
       </div>
     </OrderLayout>

@@ -1,3 +1,4 @@
+import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "../API";
@@ -27,10 +28,10 @@ const Order = () => {
     <>
       {productData && orderData && (
         <OrderLayout>
-          <div className=" px-[10rem] items-center mt-[5rem] flex flex-col space-y-10 overflow-y-scroll h-[35rem] pb-[3rem]">
-            <div className="flex space-x-[10rem]">
+          <div className="px-[2rem] md:px-[10rem] items-center mt-[5rem] flex flex-col space-y-10 overflow-y-scroll h-[35rem] pb-[3rem]">
+            <div className="flex xl:flex-row flex-col gap-[10rem]">
               <img
-                className="w-[18rem] h-[20rem] object-contain"
+                className="w-[18rem] h-[30rem] object-cover self-center"
                 src={productData.product.imageUrl}
                 alt=""
               />
@@ -38,121 +39,325 @@ const Order = () => {
                 <h1 className="text-[25px] font-bold">
                   {productData.product.title}
                 </h1>
-                <div className="flex flex-col  border-b-2">
-                  <h2 className="opacity-[40%]">Product Specifications</h2>
-                  <div className="flex gap-5">
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Category:</h3>
-                      <span>{productData.category.title}</span>
+                <div className="flex flex-col  border-b-2 pb-[1rem]">
+                  <h2 className="opacity-[60%]">Product Specifications</h2>
+                  <div className="flex flex-wrap  gap-5">
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Category
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {productData.category.title}
+                      </Tag>
                     </div>
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Colour:</h3>
-                      <span>{productData.colour.title}</span>
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Colour
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {productData.colour.title}
+                      </Tag>
                     </div>
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Size:</h3>
-                      <span>{productData.size.title}</span>
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Size
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {productData.size.title}
+                      </Tag>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col  border-b-2">
-                  <h2 className="opacity-[40%]">Customer</h2>
+                <div className="flex flex-col  border-b-2 pb-[1rem]">
+                  <h2 className="opacity-[60%]">Customer</h2>
                   <div className="flex gap-5 flex-wrap">
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Customer's Name:</h3>
-                      <span>{orderData.customer.name}</span>
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Name
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {orderData.customer.name}
+                      </Tag>
                     </div>
-                    <div className="flex gap-2 flex-wrap">
-                      <h3 className="font-bold ">Customer's Phone Number:</h3>
-                      <span>{orderData.customer.phoneNumber}</span>
+                    <div className=" flex-wrap">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Phone No:
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {orderData.customer.phoneNumber}
+                      </Tag>
                     </div>
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Customer's Email:</h3>
-                      <span>{orderData.customer.email}</span>
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Email:
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {orderData.customer.email}
+                      </Tag>
                     </div>
                   </div>
                 </div>
                 {orderData?.address?._id && (
                   <>
-                    <div className="flex flex-col  border-b-2">
-                      <h2 className="opacity-[40%]">Delivery Address</h2>
+                    <div className="flex flex-col  border-b-2 pb-[1rem]">
+                      <h2 className="opacity-[60%]">Delivery Address</h2>
                       <div className="flex gap-5 flex-wrap">
-                        <div className="flex gap-2">
-                          <h3 className="font-bold ">Full Address:</h3>
-                          <span>{orderData.address.fullAddress}</span>
+                        <div className="">
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                            color="#108ee9">
+                            Full Address:
+                          </Tag>
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              marginLeft: "-0.5rem",
+                            }}
+                            color="blue">
+                            {orderData.address.fullAddress}
+                          </Tag>
                         </div>
-                        <div className="flex gap-2 flex-wrap">
-                          <h3 className="font-bold ">Town:</h3>
-                          <span>{orderData.address.town}</span>
+                        <div className=" flex-wrap">
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                            color="#108ee9">
+                            Town:
+                          </Tag>
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              marginLeft: "-0.5rem",
+                            }}
+                            color="blue">
+                            {orderData.address.town}
+                          </Tag>
                         </div>
-                        <div className="flex gap-2">
-                          <h3 className="font-bold ">City:</h3>
-                          <span>{orderData.address.city}</span>
+                        <div className="">
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                            color="#108ee9">
+                            City:
+                          </Tag>
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              marginLeft: "-0.5rem",
+                            }}
+                            color="blue">
+                            {orderData.address.city}
+                          </Tag>
                         </div>
-                        <div className="flex gap-2">
-                          <h3 className="font-bold ">State:</h3>
-                          <span>{orderData.address.state}</span>
+                        <div className="">
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                            color="#108ee9">
+                            State:
+                          </Tag>
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              marginLeft: "-0.5rem",
+                            }}
+                            color="blue">
+                            {orderData.address.state}
+                          </Tag>
                         </div>
-                        <div className="flex gap-2">
-                          <h3 className="font-bold ">PinCode:</h3>
-                          <span>{orderData.address.pinCode}</span>
+                        <div className="">
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              fontWeight: "bold",
+                            }}
+                            color="#108ee9">
+                            PinCode:
+                          </Tag>
+                          <Tag
+                            style={{
+                              padding: "10px 15px",
+                              fontSize: "14px",
+                              marginLeft: "-0.5rem",
+                            }}
+                            color="blue">
+                            {orderData.address.pinCode}
+                          </Tag>
                         </div>
                       </div>
                     </div>
                   </>
                 )}
-                <div className="flex flex-col  border-b-2">
-                  <h2 className="opacity-[40%]">Addition Information</h2>
+                <div className="flex flex-col  border-b-2 pb-[1rem]">
+                  <h2 className="opacity-[60%]">Addition Information</h2>
                   <div className="flex gap-5">
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Delivery Mode:</h3>
-                      <span>{orderData.deliveryMode}</span>
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Delivery Mode:
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {orderData.deliveryMode}
+                      </Tag>
                     </div>
-                    <div className="flex gap-2">
-                      <h3 className="font-bold ">Payment Mode:</h3>
-                      <span>{orderData.paymentMode}</span>
+                    <div className="">
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                        color="#108ee9">
+                        Payment Mode:
+                      </Tag>
+                      <Tag
+                        style={{
+                          padding: "10px 15px",
+                          fontSize: "14px",
+                          marginLeft: "-0.5rem",
+                        }}
+                        color="blue">
+                        {orderData.paymentMode}
+                      </Tag>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex flex-col w-full">
-              <h1 className="text-center text-[19px] font-bold">
+              <h1 className="text-center text-[20px] underline mb-6 font-bold">
                 Order Details
               </h1>
               <div className="">
-                <div className="flex justify-between">
-                  <h3>Product:</h3>
+                <div className="flex justify-between bg-gray-100 items-center px-5 py-2  text-[16px] border-[1px] border-gray-300">
+                  <h3 className=" text-[16px]">Product:</h3>
                   <span>₹ {orderData.productPrice}</span>
                 </div>
-                <div className="flex justify-between">
-                  <h3>Quantity:</h3>
+                <div className="flex justify-between bg-gray-100 items-center px-5 py-2 text-[16px] border-[1px] border-gray-300">
+                  <h3 className="text-[16px]">Quantity:</h3>
                   <span>{orderData?.QUANTITY}2</span>
                 </div>
-                <div className="flex justify-between">
-                  <h3>CGST (9%):</h3>
+                <div className="flex justify-between bg-gray-100 items-center px-5 py-2  text-[16px] border-[1px] border-gray-300">
+                  <h3 className=" text-[16px]">CGST (9%):</h3>
                   <span>₹ {orderData.cgst}</span>
                 </div>
-                <div className="flex justify-between">
-                  <h3>SGST (9%):</h3>
+                <div className="flex justify-between bg-gray-100 items-center px-5 py-2  text-[16px] border-[1px] border-gray-300">
+                  <h3 className=" text-[16px]">SGST (9%):</h3>
                   <span>₹ {orderData.sgst}</span>
                 </div>
-                <div className="flex justify-between">
-                  <div className="flex space-x-2">
-                    <label htmlFor="coupon">
-                      <h3>Coupon:</h3>
-                    </label>
-                  </div>
+                <div className="flex justify-between bg-gray-100 items-center px-5 py-2  text-[16px] border-[1px] border-gray-300">
+                  <h3 className=" text-[16px]">Coupon:</h3>
+
                   <span>{orderData?.coupon?.coupon}</span>
                 </div>
-                <div className="flex justify-between">
-                  <div className="flex space-x-2">
-                    <h3>Points:</h3>
-                  </div>
+                <div className="flex justify-between bg-gray-100 items-center px-5 py-2  text-[16px] border-[1px] border-gray-300">
+                  <h3 className="text-[16px]">Points:</h3>
+
                   <span>{orderData?.points}</span>
                 </div>
-                <div className="flex justify-between">
-                  <h3>Total:</h3>
+                <div className="flex justify-between bg-gray-500 items-center px-5 py-2  text-white text-[16px]">
+                  <h3 className=" text-white text-[16px]">Total:</h3>
                   <span className="font-semibold">₹ {orderData.total}</span>
                 </div>
               </div>

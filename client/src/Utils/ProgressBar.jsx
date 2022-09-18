@@ -10,7 +10,7 @@ const ProgressBar = ({ size }) => {
   const fillerStyles = {
     height: "100%",
     width: `${size}%`,
-    background: "#080BF4",
+    background: "#1990fe",
     borderRadius: "inherit",
   };
 

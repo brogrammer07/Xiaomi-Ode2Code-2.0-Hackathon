@@ -155,8 +155,8 @@ const Product = () => {
   }, []);
   return (
     <OrderLayout>
-      <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
-        <div className="w-[95%] mx-auto flex flex-col justify-between h-full">
+      <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4 ">
+        <div className="w-[95%] mx-auto flex flex-col justify-between h-full pt-5 md:pt-0">
           <div className="">
             <div className="flex justify-between">
               <button
@@ -327,14 +327,15 @@ const Product = () => {
             </div>
             <div className="text-center mt-10 space-y-6">
               <h1>OR</h1>
-              <button
+              <Button
+                type="primary"
+                size="large"
                 onClick={() => {
                   setShowScanner(true);
                   setShowVideo(true);
-                }}
-                className="rounded-md bg-gray-600 hover:bg-gray-800 text-white px-5 py-2">
+                }}>
                 Scan Serial Number
-              </button>
+              </Button>
             </div>
             <Modal
               title="Serial Number Scanner"

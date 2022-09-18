@@ -39,6 +39,10 @@ export const createOrder = async (req, res) => {
       : totalOrders + 1)
   }`;
   console.log(orderId);
+  const exisitngOrder = await Order.findOne({ orderId });
+  if (exisitngOrder) {
+    return res.status();
+  }
   let deliveryMode;
   const customer = await Customer.findOne({ phoneNumber }).populate(
     "addresses"
@@ -198,6 +202,10 @@ export const createOrder = async (req, res) => {
                     .invoice-box.rtl table tr td:nth-child(2) {
                         text-align: left;
                     }
+                    .image{
+                      width: 100px;
+                      objectFit:contain;
+                    }
                 </style>
             </head>
         
@@ -212,11 +220,7 @@ export const createOrder = async (req, res) => {
                         <img
                           src="https://res.cloudinary.com/dccsijvqq/image/upload/v1663479993/Xiaomi%20Hackathon/mi_logo_pu5tsk.png"
                           alt=""
-                          style={{
-                            width: "100px",
-                            maxWidth: "300px",
-                            height: "100px",
-                          }}
+                          class="image"
                         />
                       </td>
   
@@ -284,9 +288,8 @@ export const createOrder = async (req, res) => {
   
               <tr class="item">
                 <td>
-                ${productName}
-                  {", "}
-                  ${productColour} colour{", "}
+                ${productName}, 
+                  ${productColour} colour, 
                   ${productSize}
                 </td>
                 <td>${productPrice}</td>
