@@ -297,9 +297,9 @@ const Basic = () => {
               {productDetails.DELIVERY_MODE !== "Pickup" &&
                 productDetails.DELIVERY_MODE !== "" && (
                   <div className="flex flex-col space-y-2">
-                    <div className="flex items-center gap-3 md:gap-0">
+                    <div className="flex items-center gap-3">
                       <label htmlFor="coc">Address</label>
-                      <div className="cursor-pointer hover:text-blue-600 duration-200 transition-all md:hidden flex">
+                      <div className="cursor-pointer hover:text-blue-600 duration-200 transition-all flex">
                         <BsPlusCircle
                           onClick={() => setShowAddressModal(true)}
                           size={20}
@@ -332,12 +332,6 @@ const Basic = () => {
                           </Option>
                         ))}
                       </Select>
-                      <div className="cursor-pointer hover:text-blue-600 duration-200 transition-all hidden md:flex">
-                        <BsPlusCircle
-                          onClick={() => setShowAddressModal(true)}
-                          size={20}
-                        />
-                      </div>
                     </div>
                   </div>
                 )}
