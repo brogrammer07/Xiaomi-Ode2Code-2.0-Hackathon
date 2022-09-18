@@ -15,7 +15,7 @@ router.post("/colour/addcolourtocategory", addColourToCategory);
 router.post("/product/addproducttocategory", addProductToCategory);
 router.post("/product/getproductbysn", getProductBySN);
 router.post("/size/addsizetocategory", addSizeToCategory);
-router.get("/category/getall", getAllCategory);
-router.post("/category/getcategorydata", getDataByCategory);
+router.get("/category/getall", auth, getAllCategory);
+router.post("/category/getcategorydata", auth, getDataByCategory);
 
 export default router;

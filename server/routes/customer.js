@@ -9,10 +9,10 @@ import {
 } from "../controllers/customer.js";
 const router = express.Router();
 
-router.post("/customer/getCustomerDetail", getCustomerData);
+router.post("/customer/getCustomerDetail", auth, getCustomerData);
 router.post("/customer/create", createCustomer);
-router.post("/customer/update", updateCustomer);
-router.post("/customer/points/get", getPoints);
-router.post("/customer/points/use", usePoints);
+router.post("/customer/update", auth, updateCustomer);
+router.post("/customer/points/get", auth, getPoints);
+router.post("/customer/points/use", auth, usePoints);
 
 export default router;
