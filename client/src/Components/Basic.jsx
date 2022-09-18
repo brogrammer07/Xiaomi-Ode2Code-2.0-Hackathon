@@ -109,6 +109,7 @@ const Basic = () => {
     setConfirmLoading(true);
     setAddresses([...addresses, newAddress]);
     setBasicDetails({ ...basicDetails, ADDRESS: newAddress });
+    setBasicDetailsStatus(true);
     setDataChanged(true);
     setTimeout(() => {
       setShowAddressModal(false);
