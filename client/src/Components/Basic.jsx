@@ -316,7 +316,7 @@ const Basic = () => {
                         showSearch
                         placeholder="Select an Address"
                         optionFilterProp="children"
-                        value={basicDetails.ADDRESS.fullAddress}
+                        value={basicDetails.ADDRESS?.fullAddress}
                         onChange={(value, option) =>
                           handleChange(value, "address", option)
                         }
