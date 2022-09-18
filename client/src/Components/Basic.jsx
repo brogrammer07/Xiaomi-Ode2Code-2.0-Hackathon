@@ -61,7 +61,8 @@ const Basic = () => {
             NAME: res.data.name,
             EMAIL: res.data.email,
             COC: res.data.coc,
-            ADDRESS: res.data.addresses[0],
+            ADDRESS:
+              res.data.addresses.length !== 0 ? res.data.addresses[0] : {},
           });
           setAddresses(res.data.addresses);
           setDataPopulateLoading(false);
