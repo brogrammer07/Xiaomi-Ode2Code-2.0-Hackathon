@@ -3,23 +3,29 @@ import jwt from "jsonwebtoken";
 import Operator from "../models/operator.js";
 
 export const login = async (req, res) => {
-  const { MI_ID, Password } = req.body;
-
+  const { MI_ID, Password, type } = req.body;
+  console.log(type);
   try {
-    const existingOperator = await Operator.findOne({ MI_ID });
-    if (!existingOperator)
-      return res.status(404).json({ message: "Operator doesn't exist." });
-    const isPasswordCorrect = await bcrypt.compare(
-      Password,
-      existingOperator.password
-    );
-    if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Invalid Credentials" });
+    let existingOperator;
+    if (type === "operator") {
+      existingOperator = await Operator.findOne({ MI_ID });
+      if (!existingOperator)
+        return res.status(404).json({ message: "Operator doesn't exist." });
+      const isPasswordCorrect = await bcrypt.compare(
+        Password,
+        existingOperator.password
+      );
+      if (!isPasswordCorrect)
+        return res.status(400).json({ message: "Invalid Credentials" });
+    } else {
+      existingOperator = await Operator.findOne({ type });
+    }
     const token = jwt.sign(
       { MI_ID: existingOperator.MI_ID, id: existingOperator._id },
       "Mi_Operator",
       { expiresIn: "5h" }
     );
+
     res.status(200).json({
       result: {
         MI_ID: existingOperator.MI_ID,

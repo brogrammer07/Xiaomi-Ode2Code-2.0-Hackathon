@@ -5,7 +5,7 @@ import { AiOutlineCheckCircle, AiFillCheckCircle } from "react-icons/ai";
 import { Types } from "../Utils/TYPES";
 const CardFields = ({ title, details, status }) => {
   return (
-    <Accordion defaultExpanded={true}>
+    <Accordion defaultExpanded={title === "Store Details"}>
       <AccordionSummary
         expandIcon={<MdExpandMore size={20} />}
         aria-controls="panel1a-content"

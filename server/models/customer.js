@@ -13,11 +13,17 @@ const customerSchema = new Schema({
   },
   email: {
     type: String,
+    required: true,
   },
   coc: {
     type: String,
   },
   addresses: [{ type: Schema.Types.ObjectId, ref: "address" }],
+  points: {
+    type: Number,
+    default: 0,
+  },
+  orders: [{ type: Schema.Types.ObjectId, ref: "order" }],
 });
 
 export default mongoose.model("customer", customerSchema);

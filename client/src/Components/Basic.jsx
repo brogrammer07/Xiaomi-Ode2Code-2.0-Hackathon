@@ -33,6 +33,7 @@ const Basic = () => {
   );
   const [isUpdating, setIsUpdating] = useState(false);
   const [dataPopulateLoading, setDataPopulateLoading] = useState(false);
+  console.log(productDetails.DELIVERY_MODE);
   const handleChange = async (value, type, option) => {
     if (type === "phoneNumber") {
       setBasicDetails({
@@ -63,6 +64,9 @@ const Basic = () => {
           });
           setAddresses(res.data.addresses);
           setDataPopulateLoading(false);
+          if (productDetails.DELIVERY_MODE === "Pickup") {
+            setBasicDetailsStatus(true);
+          }
         } catch (error) {
           setCustomerFound("Not Found");
           message.info("Customer not found");
@@ -88,6 +92,9 @@ const Basic = () => {
     } else if (type === "coc") {
       setDataChanged(true);
       setBasicDetails({ ...basicDetails, COC: value });
+      if (productDetails.DELIVERY_MODE === "Pickup") {
+        setBasicDetailsStatus(true);
+      }
     } else if (type === "address") {
       setBasicDetails({
         ...basicDetails,
@@ -167,7 +174,6 @@ const Basic = () => {
     return () => window.removeEventListener("beforeunload", unloadCallback);
   }, []);
 
-  console.log(productDetails.DELIVERY_MODE);
   return (
     <OrderLayout>
       <div className="flex-[0.6] flex flex-col my-4 mx-4 py-2 ">
@@ -246,7 +252,7 @@ const Basic = () => {
                 />
               </div>
               <div className="flex flex-col space-y-2">
-                <label htmlFor="email">Email (Optional)</label>
+                <label htmlFor="email">Email</label>
                 <Input
                   id="email"
                   disabled={
@@ -262,7 +268,7 @@ const Basic = () => {
                 <Select
                   id="coc"
                   disabled={
-                    basicDetails.EMAIL === 0 ||
+                    basicDetails.EMAIL === "" ||
                     basicDetails.PHONE === "" ||
                     basicDetails.NAME === ""
                   }
@@ -274,9 +280,8 @@ const Basic = () => {
                   filterOption={(input, option) =>
                     option.children.toLowerCase().includes(input.toLowerCase())
                   }>
-                  {basicDetails.EMAIL !== "" && (
-                    <Option value={"Email"}>Emaill</Option>
-                  )}
+                  <Option value={"Email"}>Emaill</Option>
+
                   <Option value={"WhatsApp"}>WhatsApp</Option>
                 </Select>
               </div>
@@ -421,7 +426,7 @@ const Basic = () => {
             onClick={() => handleContinue()}
             type="primary"
             size="large">
-            Continue
+            View Order Summary
           </Button>
         </div>
       </div>

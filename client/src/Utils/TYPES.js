@@ -18,7 +18,9 @@ export const Types = [
   ["PRODUCT_PRICE", "Product Price"],
   ["CGST", "CGST"],
   ["SGST", "SGST"],
+  ["COUPON_CODE", "Coupon Code"],
   ["COUPON", "Coupon"],
   ["POINTS", "Points"],
   ["TOTAL", "Total"],
+  ["PAYMENT_TYPE", "Payment Type"],
 ];

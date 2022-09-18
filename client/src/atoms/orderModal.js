@@ -37,12 +37,16 @@ export const orderSummaryState = atom({
     QUANTITY: 0,
     CGST: 0,
     SGST: 0,
-    COUPON: null,
-    POINTS: null,
+    COUPON: 0,
+    COUPON_CODE: "",
+    POINTS: 0,
     TOTAL: 0,
   },
 });
 export const paymentState = atom({
   key: "paymentState",
-  default: {},
+  default: {
+    PAYMENT_TYPE: "",
+    TOTAL: 0,
+  },
 });

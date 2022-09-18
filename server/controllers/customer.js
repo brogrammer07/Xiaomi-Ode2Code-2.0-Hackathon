@@ -64,3 +64,20 @@ export const updateCustomer = async (req, res) => {
 
   return res.status(200).json("Customer Created");
 };
+
+export const getPoints = async (req, res) => {
+  const { phoneNumber } = req.body;
+  const customer = await Customer.findOne({ phoneNumber });
+  if (customer.points !== 0) {
+    return res.status(200).json({ points: customer.points });
+  }
+  return res.status(400).json("No Points Found");
+};
+export const usePoints = async (req, res) => {
+  const { phoneNumber, points } = req.body;
+  const customer = await Customer.findOne({ phoneNumber });
+  if (points > customer.points) {
+    return res.status(400).json("Not Enough Points available");
+  }
+  return res.status(200).json("Points Applied");
+};

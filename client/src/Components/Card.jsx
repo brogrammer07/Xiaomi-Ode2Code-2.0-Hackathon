@@ -3,11 +3,13 @@ import { useRecoilValue } from "recoil";
 import {
   basicDetailsState,
   orderSummaryState,
+  paymentState,
   productDetailsState,
   storeDetailsState,
 } from "../atoms/orderModal";
 import {
   basicDetailsStatusState,
+  paymentDetailsStatusState,
   productDetailsStatusState,
   storeDetailsStatusState,
   summaryDetailsStatusState,
@@ -22,6 +24,8 @@ const Card = () => {
   const basicDetailsStatus = useRecoilValue(basicDetailsStatusState);
   const summaryDetailsStatus = useRecoilValue(summaryDetailsStatusState);
   const orderSummary = useRecoilValue(orderSummaryState);
+  const paymentDetailsStatus = useRecoilValue(paymentDetailsStatusState);
+  const paymentDetails = useRecoilValue(paymentState);
   return (
     <div className="flex-[0.4] shadow-lg h-[35rem] my-4 mx-4 md:flex flex-col py-2 hidden">
       <h1 className="text-center text-[24px] font-bold">Order Details</h1>
@@ -45,6 +49,11 @@ const Card = () => {
           title={"Order Summary"}
           status={summaryDetailsStatus}
           details={orderSummary}
+        />
+        <CardFields
+          title={"Payment"}
+          status={paymentDetailsStatus}
+          details={paymentDetails}
         />
       </div>
     </div>

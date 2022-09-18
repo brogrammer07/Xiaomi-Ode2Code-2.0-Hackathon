@@ -12,6 +12,7 @@ const Login = () => {
   const [loginCredentials, setLoginCredentials] = useState({
     MI_ID: "MIOP742210",
     Password: "12345",
+    type: "operator",
   });
 
   // Asynchronouse Local Storage Left
@@ -21,7 +22,23 @@ const Login = () => {
       setLoading(true);
       const res = await API.post("/login", loginCredentials);
       sessionStorage.setItem("operator", JSON.stringify(res.data));
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      setLoading(false);
+      message.error(error.response.data.message);
+    }
+  };
+
+  const selfCheckout = async () => {
+    try {
+      setLoading(true);
+      const res = await API.post("/login", { type: "selfCheckout" });
+      sessionStorage.setItem("operator", JSON.stringify(res.data));
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
       setLoading(false);
       message.error(error.response.data.message);
@@ -37,9 +54,14 @@ const Login = () => {
             Operator Login
           </div>
           <div
-            onClick={() => navigate("/")}
-            className="w-[20rem] h-[20rem] flex items-center text-gray-400 cursor-pointer hover:text-gray-800 duration-200 transition-all justify-center shadow-xl backdrop-blur-lg bg-gray-100 border-[1px] border-gray-200 rounded-md font-bold text-[25px] ">
-            Self Checkout
+            onClick={() => selfCheckout()}
+            className="w-[20rem] h-[20rem] flex items-center text-gray-400 cursor-pointer hover:text-gray-800 duration-200 transition-all justify-center shadow-xl backdrop-blur-lg bg-gray-100 border-[1px] border-gray-200 rounded-md font-bold text-[25px] flex-col">
+            <span>Self Checkout</span>
+            {loading && (
+              <div className="flex items-center justify-center">
+                <CircularProgress />
+              </div>
+            )}
           </div>
         </>
       ) : (

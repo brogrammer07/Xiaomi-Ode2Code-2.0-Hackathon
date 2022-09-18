@@ -1,15 +1,17 @@
-import React from "react";
-import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 const isNotActiveStyle = "cursor-pointer hover:underline text-black";
 const isActiveStyle = "cursor-pointer hover:underline font-bold text-black";
 const Header = () => {
   const navigate = useNavigate();
   const operator = JSON.parse(sessionStorage.getItem("operator")).result;
+  // useResetRecoilStates();
   const location = useLocation();
   const logOut = () => {
     sessionStorage.clear();
     navigate("/login");
   };
+
   return (
     <div className="flex items-center px-14 py-5 bg-[#f4f4f4] justify-between ">
       <div className="flex space-x-[5rem]">
@@ -35,7 +37,6 @@ const Header = () => {
           <span className="font-bold">Operator Name:</span>{" "}
           {operator && operator.operator_name}
         </h3>
-        <h3 className="font-bold cursor-pointer">Change Password</h3>
       </div>
     </div>
   );

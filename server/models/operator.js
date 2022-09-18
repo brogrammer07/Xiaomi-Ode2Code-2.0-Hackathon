@@ -17,6 +17,9 @@ const operatorSchema = new Schema({
     trim: true,
     required: true,
   },
+  type: {
+    type: String,
+  },
 });
 
 export default mongoose.model("operator", operatorSchema);

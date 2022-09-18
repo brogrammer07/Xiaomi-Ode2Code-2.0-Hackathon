@@ -13,7 +13,7 @@ import { productSchema } from "../Utils/OrderSchema";
 import Card from "./Card";
 import OrderLayout from "./OrderLayout";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
-import BarcodeReader from "react-barcode-reader";
+import API from "../API";
 const { Option } = Select;
 const Product = () => {
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ const Product = () => {
   const [productDetailsStatus, setProductDetailsStatus] = useRecoilState(
     productDetailsStatusState
   );
+  const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [colours, setColours] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -34,7 +35,7 @@ const Product = () => {
   const [serialNumber, setSerialNumber] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const handleChange = (value, type) => {
+  const handleChange = async (value, type) => {
     if (type === "category") {
       setProductDetails({
         ...productDetails,
@@ -45,13 +46,17 @@ const Product = () => {
         QUANTITY: 0,
         DELIVERY_MODE: "",
       });
-      let temp = productSchema.categories.find((data) => data.title === value);
-      setSerialNumber(serialNumber + temp.id);
-      setProducts(temp.products);
-      setColours(
-        temp.specifications.find((data) => data.title === "Colour").colours
+      let temp = categories.find((data) => data.title === value);
+      console.log(temp);
+      setSerialNumber(temp.id);
+      const { data: getCategoryData } = await API.post(
+        "/category/getcategorydata",
+        { categoryTitle: value }
       );
-      setSizes(temp.specifications.find((data) => data.title === "Size").sizes);
+      console.log(getCategoryData);
+      setProducts(getCategoryData.products);
+      setColours(getCategoryData.colours);
+      setSizes(getCategoryData.sizes);
     } else if (type === "product") {
       setProductDetails({
         ...productDetails,
@@ -60,21 +65,15 @@ const Product = () => {
         SIZE: "",
         QUANTITY: 0,
       });
-      let temp = productSchema.categories
-        .find((data) => data.id === serialNumber)
-        .products.find((pro) => pro.title === value);
+      let temp = products.find((pro) => pro.title === value);
       setSerialNumber(serialNumber + temp.SN);
       setProductDetailsStatus(false);
     } else if (type === "colour") {
       setProductDetails({ ...productDetails, COLOUR: value });
-      let temp = productSchema.categories
-        .find((data) => data.id === serialNumber.slice(0, 2))
-        .specifications[0].colours.find((col) => col.title === value);
+      let temp = colours.find((col) => col.title === value);
       setSerialNumber(serialNumber + temp.id);
     } else if (type === "size") {
-      let temp = productSchema.categories
-        .find((data) => data.id === serialNumber.slice(0, 2))
-        .specifications[1].sizes.find((siz) => siz.title === value);
+      let temp = sizes.find((siz) => siz.title === value);
       setSerialNumber(serialNumber + temp.id);
       setProductDetails({
         ...productDetails,
@@ -89,23 +88,33 @@ const Product = () => {
     } else return;
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setConfirmLoading(true);
     const category = serialNumber.slice(0, 2);
+    let temp = categories.find((data) => data.id === category);
+    const { data: getCategoryData } = await API.post(
+      "/category/getcategorydata",
+      { categoryTitle: temp.title }
+    );
+    console.log(getCategoryData);
+    setProducts(getCategoryData.products);
+    setColours(getCategoryData.colours);
+    setSizes(getCategoryData.sizes);
+
     const SN = serialNumber.slice(2, 6);
     const colourId = serialNumber.slice(6, 8);
     const sizeId = serialNumber.slice(8, 10);
-    let temp = productSchema.categories.find((data) => data.id === category);
-    console.log(temp);
+    console.log("PRODUCTS", products);
+    console.log("SIZES", sizes);
+    console.log("COLOURS", colours);
     setProductDetails({
       ...productDetails,
-      CATEGORY: temp.title,
-      PRODUCT: temp.products.find((data) => data.SN === SN).title,
-      COLOUR: temp.specifications[0].colours.find(
-        (data) => data.id === colourId
-      ).title,
-      SIZE: temp.specifications[1].sizes.find((data) => data.id === sizeId)
+      PRODUCT_SN: serialNumber,
+      CATEGORY: getCategoryData.category.title,
+      PRODUCT: getCategoryData.products.find((data) => data.SN === SN).title,
+      COLOUR: getCategoryData.colours.find((data) => data.id === colourId)
         .title,
+      SIZE: getCategoryData.sizes.find((data) => data.id === sizeId).title,
     });
 
     setTimeout(() => {
@@ -113,6 +122,19 @@ const Product = () => {
       setConfirmLoading(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    const getAllCategory = async () => {
+      try {
+        const { data } = await API.get("/category/getall");
+        setCategories(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllCategory();
+  }, []);
 
   useEffect(() => {
     if (!storeDetailsStatus) {
@@ -171,7 +193,7 @@ const Product = () => {
                         .toLowerCase()
                         .includes(input.toLowerCase())
                     }>
-                    {productSchema.categories.map((data) => (
+                    {categories.map((data) => (
                       <Option key={data.title} value={data.title}>
                         {data.title}
                       </Option>
