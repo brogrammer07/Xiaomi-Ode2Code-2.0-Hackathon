@@ -27,16 +27,13 @@ const TrackOrder = () => {
     ]),
   ];
   const onClick = (e) => {
-    console.log(e);
     setFilterOption(e.key);
   };
 
   useEffect(() => {
     const getOrders = async () => {
       try {
-        console.log("yes");
         const { data } = await API.get("/order/getall");
-        console.log(data);
         data.forEach((order, i) => {
           setOrders((prevOrders) => [
             ...prevOrders,
@@ -71,7 +68,6 @@ const TrackOrder = () => {
     };
     getOrders();
   }, []);
-  console.log(orders);
 
   const columns = [
     {

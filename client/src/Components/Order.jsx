@@ -13,7 +13,7 @@ const Order = () => {
       const getOrder = async () => {
         try {
           const { data } = await API.post("/order/get", { orderId });
-          console.log(data);
+  
           setOrderData(data.orderData);
           setProductData(data.productData);
         } catch (error) {
@@ -23,7 +23,7 @@ const Order = () => {
       getOrder();
     }
   }, []);
-  console.log(orderData);
+
   return (
     <>
       {productData && orderData && (

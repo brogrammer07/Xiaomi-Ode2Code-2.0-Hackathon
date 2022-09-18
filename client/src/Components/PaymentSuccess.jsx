@@ -31,8 +31,10 @@ const PaymentSuccess = () => {
   const orderSummaryStatus = useRecoilValue(summaryDetailsStatusState);
   const paymentDetails = useRecoilValue(paymentState);
   const [pointsEarned, setPointsEarned] = useState(0);
-  console.log(productDetailsStatus);
-  const [orderId, setOrderId] = useState(null);
+
+  const [orderId, setOrderId] = useState(
+    JSON.parse(sessionStorage.getItem("orderId"))
+  );
   const [paymentStatus, setPaymentStatus] = useRecoilState(
     paymentDetailsStatusState
   );
@@ -75,6 +77,7 @@ const PaymentSuccess = () => {
         setPointsEarned(data.pointsEarned);
         setOrderId(data.orderId);
         setPaymentStatus(true);
+        sessionStorage.setItem("orderId", JSON.stringify(data.orderId));
       };
       createOrder();
     }

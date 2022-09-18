@@ -47,13 +47,12 @@ const Product = () => {
         DELIVERY_MODE: "",
       });
       let temp = categories.find((data) => data.title === value);
-      console.log(temp);
+
       setSerialNumber(temp.id);
       const { data: getCategoryData } = await API.post(
         "/category/getcategorydata",
         { categoryTitle: value }
       );
-      console.log(getCategoryData);
       setProducts(getCategoryData.products);
       setColours(getCategoryData.colours);
       setSizes(getCategoryData.sizes);
@@ -96,7 +95,6 @@ const Product = () => {
       "/category/getcategorydata",
       { categoryTitle: temp.title }
     );
-    console.log(getCategoryData);
     setProducts(getCategoryData.products);
     setColours(getCategoryData.colours);
     setSizes(getCategoryData.sizes);
@@ -104,9 +102,6 @@ const Product = () => {
     const SN = serialNumber.slice(2, 6);
     const colourId = serialNumber.slice(6, 8);
     const sizeId = serialNumber.slice(8, 10);
-    console.log("PRODUCTS", products);
-    console.log("SIZES", sizes);
-    console.log("COLOURS", colours);
     setProductDetails({
       ...productDetails,
       PRODUCT_SN: serialNumber,
@@ -128,7 +123,6 @@ const Product = () => {
       try {
         const { data } = await API.get("/category/getall");
         setCategories(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }

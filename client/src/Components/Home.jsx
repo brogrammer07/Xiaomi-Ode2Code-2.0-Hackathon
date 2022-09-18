@@ -8,7 +8,7 @@ const Home = () => {
   const operator = JSON.parse(sessionStorage.getItem("operator"));
   const navigate = useNavigate();
   useResetRecoilStates();
-  console.log(operator);
+
   useEffect(() => {
     if (operator === null) {
       navigate("/login");

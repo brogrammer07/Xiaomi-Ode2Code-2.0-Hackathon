@@ -33,7 +33,7 @@ const Basic = () => {
   );
   const [isUpdating, setIsUpdating] = useState(false);
   const [dataPopulateLoading, setDataPopulateLoading] = useState(false);
-  console.log(productDetails.DELIVERY_MODE);
+
   const handleChange = async (value, type, option) => {
     if (type === "phoneNumber") {
       setBasicDetails({

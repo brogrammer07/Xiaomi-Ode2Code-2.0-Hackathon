@@ -64,7 +64,6 @@ const Payment = () => {
     const razor = new window.Razorpay(options);
 
     razor.open();
-    console.log("RAZOR", razor);
   };
 
   const checkoutCash = () => {

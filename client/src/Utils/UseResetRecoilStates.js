@@ -33,7 +33,6 @@ export const useResetRecoilStates = () => {
     paymentDetailsStatusState
   );
   useEffect(() => {
-    console.log("YESS");
     resetStoreDetails();
     resetStoreDetailsStatus();
     resetProductDetails();

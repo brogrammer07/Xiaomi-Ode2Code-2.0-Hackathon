@@ -38,10 +38,10 @@ export const createOrder = async (req, res) => {
       ? `0${totalOrders + 1}`
       : totalOrders + 1)
   }`;
-  console.log(orderId);
   const exisitngOrder = await Order.findOne({ orderId });
   if (exisitngOrder) {
-    return res.status();
+    console.log("Already Created");
+    return res.status(200).json("order created");
   }
   let deliveryMode;
   const customer = await Customer.findOne({ phoneNumber }).populate(
@@ -305,7 +305,7 @@ export const createOrder = async (req, res) => {
         </html>`,
   });
 
-  res.status(200).json({ pointsEarned, orderId: newOrder.orderId });
+  return res.status(200).json({ pointsEarned, orderId: newOrder.orderId });
 };
 
 export const getAllOrders = async (req, res) => {
@@ -321,6 +321,9 @@ export const getAllOrders = async (req, res) => {
 };
 export const getOrder = async (req, res) => {
   const { orderId } = req.body;
+  if (orderId === null) {
+    return res.status(400).json("Order Id is not present");
+  }
   const order = await Order.findOne({ orderId })
     .populate({
       path: "customer",

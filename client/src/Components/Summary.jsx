@@ -69,7 +69,6 @@ const Summary = () => {
     try {
       setIsApplyingCoupon(true);
       const res = await API.post("/coupon/get", { couponCode: tempCouponCode });
-      console.log(res);
       message.success("Applying Coupon");
       setIsApplyingCoupon(false);
       setOrderSummary({
@@ -114,7 +113,6 @@ const Summary = () => {
           "/product/getproductbysn",
           { SN: productDetails.PRODUCT_SN }
         );
-        console.log(productData);
         const productPrice = productData.product.price;
         const sizePrice = productData.size.price;
         setPrice(productPrice + sizePrice);
@@ -149,7 +147,6 @@ const Summary = () => {
     window.addEventListener("beforeunload", unloadCallback);
     return () => window.removeEventListener("beforeunload", unloadCallback);
   }, []);
-  console.log("Points", orderSummary.COUPON_CODE);
   return (
     <OrderLayout>
       <div className="flex-1 md:flex-[0.6] flex flex-col my-4 mx-4 ">
