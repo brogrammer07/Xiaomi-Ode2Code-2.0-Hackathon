@@ -438,7 +438,7 @@ const Basic = () => {
               basicDetails.NAME === "" ||
               basicDetails.COC === "" ||
               (productDetails.DELIVERY_MODE !== "Pickup" &&
-                Object.keys(basicDetails.ADDRESS).length === 0)
+                basicDetails.ADDRESS?.fullAddress)
             }
             onClick={() => handleContinue()}
             type="primary"
