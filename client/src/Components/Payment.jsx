@@ -54,9 +54,7 @@ const Payment = () => {
         email: basicDetails.EMAIL,
         contact: basicDetails.PHONE,
       },
-      notes: {
-        address: basicDetails.ADDRESS.fullAddress,
-      },
+
       theme: {
         color: "#4595CF",
       },
